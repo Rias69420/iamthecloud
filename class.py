@@ -1,3 +1,0 @@
-print("bruv")
-
-print("thething")
