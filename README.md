@@ -1,3 +1,3 @@
 
 # *professional unprofessional programming mentally handicapped idiot*
-![Alt text]()
+![My GIF](assets/spinning dorito.gif)
