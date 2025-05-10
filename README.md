@@ -1,3 +1,5 @@
+# Professional Unprofessional Programming Mentally Handicapped Idiot
 
-# *professional unprofessional programming mentally handicapped idiot*
-![My GIF](assets/spinning dorito.gif)
+![Spinning Dorito](https://raw.githubusercontent.com/Rias69420/iamthecloud/main/spinning%20dorito.gif)
+
+
