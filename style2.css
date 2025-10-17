@@ -1,0 +1,36 @@
+.md {
+    margin-bottom: 20px;
+    background:rgb(255, 255, 255);
+    padding: 10px;
+    border-radius: 5px;
+    margin: auto;
+    width: 50%;
+    border: 3px solid green;
+    padding: 10px;
+    display: none;
+    position: fixed;
+    top: 0;
+    right: 540px;
+    border: 3px solid #f1f1f1;
+    z-index: 9;
+      }
+.open-button {
+    background-color: #555;
+    color: white;
+    padding: 16px 20px;
+    border: none;
+    cursor: pointer;
+    opacity: 0.8;
+    position: fixed;
+    top: 23px;
+    right: 960px;
+    width: 280px;
+}
+
+.form-container .btn:hover, .open-button:hover {
+    opacity: 1;
+}
+.form-container .cancel {
+    background-color: red;
+    border: 0
+  }

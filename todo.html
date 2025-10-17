@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nerd simulator</title>
+    <link rel="stylesheet" href="style2.css">
+</head>
+<body>
+    <button class="open-button" onclick="openForm()">Atvert majasdarbus</button>
+    <script>
+        function openForm() {
+          document.getElementById("md").style.display = "block";
+        }
+      
+        function closeForm() {
+          document.getElementById("md").style.display = "none";
+        }
+      
+        function validateFileName() {
+          const fileInput = document.getElementById("fileInput");
+          if (!fileInput.files.length) {
+            alert("Lūdzu, izvēlies failu.");
+            return false;
+          }
+      
+          const fileName = fileInput.files[0].name.split('.')[0]; 
+          if (fileName !== "bio_md") {
+          if (fileName !== "mat_md")
+          if (fileName !== "lat_md")
+            alert("Nav pareizais file iesniegts.");
+            return false;
+          }
+      
+          return true;
+        }
+      </script>
+      
+<div class="md" id="md">
+    <form action="/action_page.php" class="form-container" onsubmit="return validateFileName()">
+      <h1>Majasdarbi</h1>
+      <label for="fileInput">Iesniedziet šeit:</label>
+      <input type="file" id="fileInput" name="fileInput" accept=".txt,.pdf,.doc,.docx" onchange="checkFileName()" style="display: inline-block; margin-left: 10px;" />
+      <br><br>
+      <button type="submit" class="btn">Iesniegt</button>
+      <button type="button" class="btn cancel" onclick="closeForm()">Aizvert</button>
+    </form>
+  </div>
+  
+</body>
