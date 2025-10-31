@@ -1,36 +1,79 @@
+body, div, form, script {
+  font-family: 'Brush Script MT', cursive;
+}
+
 .md {
-    margin-bottom: 20px;
-    background:rgb(255, 255, 255);
-    padding: 10px;
-    border-radius: 5px;
-    margin: auto;
-    width: 50%;
-    border: 3px solid green;
-    padding: 10px;
-    display: none;
-    position: fixed;
-    top: 0;
-    right: 540px;
-    border: 3px solid #f1f1f1;
-    z-index: 9;
-      }
+  margin-bottom: 20px;
+  background: rgb(255, 255, 255);
+  padding: 10px;
+  border-radius: 5px;
+  margin: auto;
+  width: 50%;
+  border: 3px solid green;
+  display: none;
+  position: fixed;
+  top: 0;
+  right: 540px;
+  border: 3px solid #f1f1f1;
+  z-index: 9;
+}
+
 .open-button {
-    background-color: #555;
-    color: white;
-    padding: 16px 20px;
-    border: none;
-    cursor: pointer;
-    opacity: 0.8;
-    position: fixed;
-    top: 23px;
-    right: 960px;
-    width: 280px;
+  background-color: #555;
+  color: white;
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  opacity: 0.8;
+  position: fixed;
+  top: 23px;
+  right: 960px;
+  width: 280px;
 }
 
 .form-container .btn:hover, .open-button:hover {
-    opacity: 1;
+  opacity: 1;
 }
+
 .form-container .cancel {
-    background-color: red;
-    border: 0
-  }
+  background-color: red;
+  border: 0;
+}
+
+.btn-iesniegt {
+  background-color: green;
+  border: 0;
+}
+
+/* small inline controls for the label row */
+.label-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-top: 12px;
+}
+
+.label-text {
+  font-weight: 600;
+  font-size: 16px;
+  margin-right: 8px;
+}
+
+.small-btn {
+  padding: 6px 8px;
+  font-size: 13px;
+  cursor: pointer;
+  border: 1px solid #ccc;
+  background: #f5f5f5;
+  border-radius: 3px;
+}
+
+.hidden {
+  display: none;
+}
+
+input[type="text"].edit-input {
+  padding: 6px;
+  font-size: 14px;
+}
+
