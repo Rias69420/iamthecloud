@@ -1,51 +1,131 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nerd simulator</title>
-    <link rel="stylesheet" href="style2.css">
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Nerd simulator</title>
+  <link rel="stylesheet" href="style2.css">
 </head>
 <body>
-    <button class="open-button" onclick="openForm()">Atvert majasdarbus</button>
-    <script>
-        function openForm() {
-          document.getElementById("md").style.display = "block";
-        }
-      
-        function closeForm() {
-          document.getElementById("md").style.display = "none";
-        }
-      
-        function validateFileName() {
-          const fileInput = document.getElementById("fileInput");
-          if (!fileInput.files.length) {
-            alert("Lūdzu, izvēlies failu.");
-            return false;
-          }
-      
-          const fileName = fileInput.files[0].name.split('.')[0]; 
-          if (fileName !== "bio_md") {
-          if (fileName !== "mat_md")
-          if (fileName !== "lat_md")
-            alert("Nav pareizais file iesniegts.");
-            return false;
-          }
-      
-          return true;
-        }
-      </script>
-      
-<div class="md" id="md">
-    <form action="/action_page.php" class="form-container" onsubmit="return validateFileName()">
+  <button class="open-button" onclick="openForm()">Atvert majasdarbus</button>
+
+  <div class="md" id="md">
+    <!-- note: removed action attribute so form won't navigate; onsubmit handles everything -->
+    <form class="form-container" onsubmit="return handleSubmit(event)">
       <h1>Majasdarbi</h1>
+
       <label for="fileInput">Iesniedziet šeit:</label>
-      <input type="file" id="fileInput" name="fileInput" accept=".txt,.pdf,.doc,.docx" onchange="checkFileName()" style="display: inline-block; margin-left: 10px;" />
+      <input type="file" id="fileInput" name="fileInput" accept=".txt,.pdf,.doc,.docx"
+             onchange="checkFileName()" style="display: inline-block; margin-left: 10px;" />
       <br><br>
-      <button type="submit" class="btn">Iesniegt</button>
+
+      <div class="label-row" id="mathRow">
+        <span class="label-text" id="mathLabel">Math MD 0/1</span>
+        <button type="button" class="small-btn" id="editMathBtn" onclick="startEditMath()">Edit</button>
+        <button type="button" class="small-btn" id="removeMathBtn" onclick="removeMath()">Remove</button>
+      </div>
+
+      <div class="label-row hidden" id="mathEditRow">
+        <input type="text" id="mathEditInput" class="edit-input" value="Math MD 0/1" aria-label="Edit Math label" />
+        <button type="button" class="small-btn" onclick="saveMathEdit()">Save</button>
+        <button type="button" class="small-btn" onclick="cancelMathEdit()">Cancel</button>
+      </div>
+
+      <br/>
+      <button type="submit" class="btn-iesniegt">Iesniegt</button>
       <button type="button" class="btn cancel" onclick="closeForm()">Aizvert</button>
     </form>
   </div>
-  
+
+  <script>
+    const MATH_KEY = 'mathLabel';
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const saved = localStorage.getItem(MATH_KEY);
+      if (saved) {
+        setMathLabel(saved, false);
+      } else {
+        setMathLabel('Math MD 0/1', false);
+      }
+    });
+
+    function openForm() { document.getElementById("md").style.display = "block"; }
+    function closeForm() { document.getElementById("md").style.display = "none"; }
+
+    function handleSubmit(event) {
+      event.preventDefault(); // stop normal form navigation
+      const fileInput = document.getElementById("fileInput");
+      if (!fileInput.files.length) {
+        alert("Lūdzu, izvēlies failu.");
+        return false;
+      }
+
+      const fileName = fileInput.files[0].name.split('.')[0];
+      if (fileName !== "bio_md" && fileName !== "mat_md" && fileName !== "lat_md") {
+        alert("Nav pareizais file iesniegts.");
+        return false;
+      }
+
+      // special behavior for mat_md: set score to 1/1 and persist
+      if (fileName === 'mat_md') {
+        const current = getMathLabel();
+        const newLabel = current.replace(/\s*\d+\s*\/\s*\d+$/, '') + ' 1/1';
+        setMathLabel(newLabel, true);
+      }
+
+      // simulate a successful submission, then refresh the page to show persisted label
+      // you can show a temporary message here if desired before reload
+      location.reload();
+      return false;
+    }
+
+    function checkFileName() { return; }
+
+    function getMathLabel() {
+      return localStorage.getItem(MATH_KEY) || document.getElementById('mathLabel').textContent;
+    }
+
+    function setMathLabel(value, save = true) {
+      const labelEl = document.getElementById('mathLabel');
+      const inputEl = document.getElementById('mathEditInput');
+      if (labelEl) labelEl.textContent = value;
+      if (inputEl) inputEl.value = value;
+      if (save) localStorage.setItem(MATH_KEY, value);
+    }
+
+    function startEditMath() {
+      const row = document.getElementById('mathRow');
+      const editRow = document.getElementById('mathEditRow');
+      const input = document.getElementById('mathEditInput');
+      input.value = getMathLabel();
+      row.classList.add('hidden');
+      editRow.classList.remove('hidden');
+      input.focus();
+      input.select();
+    }
+
+    function saveMathEdit() {
+      const input = document.getElementById('mathEditInput');
+      const newVal = input.value.trim() || 'Math MD 0/1';
+      setMathLabel(newVal, true);
+      document.getElementById('mathEditRow').classList.add('hidden');
+      document.getElementById('mathRow').classList.remove('hidden');
+    }
+
+    function cancelMathEdit() {
+      document.getElementById('mathEditInput').value = getMathLabel();
+      document.getElementById('mathEditRow').classList.add('hidden');
+      document.getElementById('mathRow').classList.remove('hidden');
+    }
+
+    function removeMath() {
+      const row = document.getElementById('mathRow');
+      const editRow = document.getElementById('mathEditRow');
+      if (row) row.parentNode.removeChild(row);
+      if (editRow) editRow.parentNode.removeChild(editRow);
+      localStorage.removeItem(MATH_KEY);
+    }
+  </script>
 </body>
+</html>
